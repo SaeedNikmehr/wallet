@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GetBalanceController;
+use App\Http\Controllers\UpdateBalanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('users/{user}/')->name('users.balance.')->group(function (){
     Route::get('balance', GetBalanceController::class)->name('show');
+    Route::patch('balance', UpdateBalanceController::class)->name('update');
 });
