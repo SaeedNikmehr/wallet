@@ -18,6 +18,16 @@ class TransactionRepository
         return $referenceId;
     }
 
+    public function totalWithdraws(): int
+    {
+        return Transaction::query()->where('amount', '<', 0)->sum('amount');
+    }
+
+    public function totalDeposits(): int
+    {
+        return Transaction::query()->where('amount', '>', 0)->sum('amount');
+    }
+
     /*
      * Why did I choose these steps for creating a unique reference id?
      *
