@@ -22,7 +22,7 @@ class UserRepository
     public function updateBalance(User $user, int $amount): string
     {
         return DB::transaction(function () use ($amount, $user) {
-            $user->lockForUpdate();
+            $user = $user->lockForUpdate()->first();
             $user->increment('balance', $amount);
 
             return Transaction::createTransaction($user->id, $amount);
