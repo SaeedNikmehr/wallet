@@ -68,4 +68,22 @@ class UpdateBalanceControllerTest extends TestCase
         );
     }
 
+    public function test_returns_error_if_amount_exceeds_the_limits_in_the_config(): void
+    {
+        $user = User::factory()->create();
+        $request = ['amount' => 1000];
+        config()->set('wallet.min_transaction_amount', -100);
+        config()->set('wallet.max_transaction_amount', 100);
+
+        \App\Facades\User::shouldReceive('balanceShouldNotGetBelowZero')->never();
+        \App\Facades\User::shouldReceive('updateBalance')->never();
+
+        $response = $this->patchJson(route('users.balance.update', $user->id), $request);
+        $response->assertJson(fn(AssertableJson $json) => $json->where('status', 'error')
+            ->has('data')
+            ->where('message', 'The amount field must be between -100 and 100.')
+            ->has('errors')
+        );
+    }
+
 }

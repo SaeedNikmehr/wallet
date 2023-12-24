@@ -14,10 +14,14 @@ class UpdateBalanceRequest extends FormRequest
 
     public function rules(): array
     {
+        $minTransactionValue = config('wallet.min_transaction_amount');
+        $maxTransactionValue = config('wallet.max_transaction_amount');
+
         return [
             'amount' => [
                 'required',
                 'integer',
+                "Between:$minTransactionValue,$maxTransactionValue",
                 Rule::notIn([0])]
         ];
     }
