@@ -33,11 +33,7 @@ class TransactionRepository
      *
      * I think the best way to create a unique ID is using something like UUID,
      * but since we need a smaller length ID, we can use PHP uniqid() which is based on microseconds
-     * and gives us a decent chance for a unique value, but since we need to be sure if it's
-     * a duplicate, we repeat to reach a unique value at last. and because we need to return this
-     * value to user, I can't make it async using something like observers or events.
-     * Another option is using transaction id as a reference in form of base 62(without "-_" vs 64).
-     * but to reach a fixed length for smaller IDs we would have a lot of zeros before our reference ID.
+     * and because we need to return this value, I can't make it async.
      */
     private function createUniqueReferenceId(): string
     {
