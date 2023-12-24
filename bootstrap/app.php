@@ -36,6 +36,10 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+/*
+ * Because I wanted to create a unified structure response for all situations,
+ * I created a customized handler.
+ */
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     //App\Exceptions\Handler::class
